@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Card catalog | Courses and trainings</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lusitana:wght@400;700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="background"></div>
+    <img class="dots" src="./src/dots.svg" alt="background-dots" />
+    <img class="shapes1" src="./src/shapes1.svg" alt="background-shapes1" />
+    <img class="shapes2" src="./src/shapes2.svg" alt="background-shapes2" />
+
+    <div class="wrappage">
+      <div class="page">
+        <div class="catalog__header">
+          <h6 class="catalog__title_h6">Enjoy your studying!</h6>
+          <h1 class="catalog__title_h1">Our online courses</h1>
+        </div>
+        <div class="controls">
+          <!-- Фильтры: динамические кнопки на основе Map {position: count} -->
+          <div class="filters">
+            <div class="filters__list" id="filtersContainer">
+              <!-- Сюда будут вставлены кнопки фильтров (включая "Все") -->
+            </div>
+          </div>
+          <!-- Поиск -->
+          <div class="search">
+            <input
+              type="text"
+              class="search__field"
+              id="searchInput"
+              placeholder="Search course..."
+              aria-label="Search"
+            />
+            <img
+              src="./src/search.svg"
+              class="search__icon"
+              alt="search__icon"
+            />
+          </div>
+        </div>
+
+        <!-- Список карточек -->
+        <div id="cardsContainer" class="cards"></div>
+      </div>
+    </div>
+
+    <script src="./scripts.js"></script>
+  </body>
+</html>
