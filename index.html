@@ -17,25 +17,29 @@
     />
   </head>
   <body>
-    <div class="background"></div>
-    <img class="dots" src="./src/dots.svg" alt="background-dots" />
-    <img class="shapes1" src="./src/shapes1.svg" alt="background-shapes1" />
-    <img class="shapes2" src="./src/shapes2.svg" alt="background-shapes2" />
+    <img class="dots" src="./src/icons/dots.svg" alt="background-dots" />
+    <img
+      class="shapes1"
+      src="./src/icons/shapes1.svg"
+      alt="background-shapes1"
+    />
+    <img
+      class="shapes2"
+      src="./src/icons/shapes2.svg"
+      alt="background-shapes2"
+    />
 
     <div class="wrappage">
       <div class="page">
-        <div class="catalog__header">
-          <h6 class="catalog__title_h6">Enjoy your studying!</h6>
+        <header class="catalog__header">
           <h1 class="catalog__title_h1">Our online courses</h1>
-        </div>
-        <div class="controls">
-          <!-- Фильтры: динамические кнопки на основе Map {position: count} -->
+          <h6 class="catalog__title_h6">Enjoy your studying!</h6>
+          
+        </header>
+        <aside class="controls">
           <div class="filters">
-            <div class="filters__list" id="filtersContainer">
-              <!-- Сюда будут вставлены кнопки фильтров (включая "Все") -->
-            </div>
+            <div class="filters__list" id="filtersContainer"></div>
           </div>
-          <!-- Поиск -->
           <div class="search">
             <input
               type="text"
@@ -45,18 +49,17 @@
               aria-label="Search"
             />
             <img
-              src="./src/search.svg"
+              src="./src/icons/search.svg"
               class="search__icon"
               alt="search__icon"
             />
           </div>
-        </div>
+        </aside>
 
-        <!-- Список карточек -->
         <div id="cardsContainer" class="cards"></div>
       </div>
     </div>
 
-    <script src="./scripts.js"></script>
+    <script type="module" src="./scripts.js"></script>
   </body>
 </html>
