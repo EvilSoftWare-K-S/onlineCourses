@@ -1,8 +1,7 @@
-import { buildPositionMap } from '../utils/helpers.js';
-
+import { CONFIG } from "./state.js";
 const rawData = [
   {
-    url: "./src/mocks/man1.png",
+    url: "./src/scripts/allCourses/mockImgs/man1.png",
     position: "Marketing",
     title: "The Ultimate Google Ads Training Course",
     price: "$100",
@@ -10,7 +9,7 @@ const rawData = [
     color: "#03CEA4",
   },
   {
-    url: "./src/mocks/man2.png",
+    url: "./src/scripts/allCourses/mockImgs/man2.png",
     position: "Management",
     title: "Prduct Management Fundamentals",
     price: "$480",
@@ -19,7 +18,7 @@ const rawData = [
   },
 
   {
-    url: "./src/mocks/man3.png",
+    url: "./src/scripts/allCourses/mockImgs/man3.png",
     position: "HR & Recruting",
     title: "HR  Management and Analytics",
     price: "$200",
@@ -27,7 +26,7 @@ const rawData = [
     color: "#F89828",
   },
   {
-    url: "./src/mocks/woman1.png",
+    url: "./src/scripts/allCourses/mockImgs/woman1.png",
     position: "Marketing",
     title: "Brand Management & PR Communications",
     price: "$530",
@@ -35,7 +34,7 @@ const rawData = [
     color: "#03CEA4",
   },
   {
-    url: "./src/mocks/man4.png",
+    url: "./src/scripts/allCourses/mockImgs/man4.png",
     position: "Design",
     title: "Graphic Design Basic",
     price: "$500",
@@ -43,7 +42,7 @@ const rawData = [
     color: "#F52F6E",
   },
   {
-    url: "./src/mocks/woman2.png",
+    url: "./src/scripts/allCourses/mockImgs/woman2.png",
     position: "Management",
     title: "Business Development Management",
     price: "$400",
@@ -51,7 +50,7 @@ const rawData = [
     color: "#5A87FC",
   },
   {
-    url: "./src/mocks/man5.png",
+    url: "./src/scripts/allCourses/mockImgs/man5.png",
     position: "Development",
     title: "Highload Software Architecture",
     price: "$600",
@@ -59,7 +58,7 @@ const rawData = [
     color: "#7772F1",
   },
   {
-    url: "./src/mocks/woman3.png",
+    url: "./src/scripts/allCourses/mockImgs/woman3.png",
     position: "HR & Recruting",
     title: "Human Resources – Selection and Recruitment",
     price: "$150",
@@ -67,7 +66,7 @@ const rawData = [
     color: "#F89828",
   },
   {
-    url: "./src/mocks/man6.png",
+    url: "./src/scripts/allCourses/mockImgs/man6.png",
     position: "Design",
     title: "User Experience. Human-centered Design",
     price: "$240",
@@ -76,7 +75,7 @@ const rawData = [
   },
 
   {
-    url: "./src/mocks/man5.png",
+    url: "./src/scripts/allCourses/mockImgs/man5.png",
     position: "Development",
     title: "Highload Software Architecture 2",
     price: "$400",
@@ -84,7 +83,7 @@ const rawData = [
     color: "#7772F1",
   },
   {
-    url: "./src/mocks/man5.png",
+    url: "./src/scripts/allCourses/mockImgs/man5.png",
     position: "Development",
     title: "Highload Software Architecture 3",
     price: "$500",
@@ -93,7 +92,7 @@ const rawData = [
   },
 
   {
-    url: "./src/mocks/woman3.png",
+    url: "./src/scripts/allCourses/mockImgs/woman3.png",
     position: "HR & Recruting",
     title: "Human Resources – Selection and Recruitment 2",
     price: "$350",
@@ -101,7 +100,7 @@ const rawData = [
     color: "#F89828",
   },
   {
-    url: "./src/mocks/woman3.png",
+    url: "./src/scripts/allCourses/mockImgs/woman3.png",
     position: "HR & Recruting",
     title: "Human Resources – Selection and Recruitment 3",
     price: "$250",
@@ -109,7 +108,7 @@ const rawData = [
     color: "#F89828",
   },
   {
-    url: "./src/mocks/woman3.png",
+    url: "./src/scripts/allCourses/mockImgs/woman3.png",
     position: "HR & Recruting",
     title: "Human Resources – Selection and Recruitment 4",
     price: "$450",
@@ -118,7 +117,7 @@ const rawData = [
   },
 
   {
-    url: "./src/mocks/woman2.png",
+    url: "./src/scripts/allCourses/mockImgs/woman2.png",
     position: "Management",
     title: "Business Development Management 2",
     price: "$400",
@@ -127,7 +126,7 @@ const rawData = [
   },
 
   {
-    url: "./src/mocks/man1.png",
+    url: "./src/scripts/allCourses/mockImgs/man1.png",
     position: "Marketing",
     title: "The Ultimate Google Ads Training Course 2",
     price: "$200",
@@ -135,7 +134,7 @@ const rawData = [
     color: "#03CEA4",
   },
   {
-    url: "./src/mocks/man1.png",
+    url: "./src/scripts/allCourses/mockImgs/man1.png",
     position: "Marketing",
     title: "The Ultimate Google Ads Training Course 3",
     price: "$300",
@@ -144,13 +143,46 @@ const rawData = [
   },
 ];
 
-export function getRawData(){
-    return rawData;
+export function getSearchPaginationData(filter, search, start, end) {
+  let filtered = [...rawData];
+  // Фильтр по должности
+  if (filter !== "All") {
+    filtered = filtered.filter((item) => item.position === filter);
+  }
+  // Поиск
+  if (search.trim() !== "") {
+    const query = search.trim().toLowerCase();
+    filtered = filtered.filter((item) => {
+      return (
+        item.title.toLowerCase().includes(query) ||
+        item.name.toLowerCase().includes(query) ||
+        item.position.toLowerCase().includes(query)
+      );
+    });
+  }
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const newItems = filtered.slice(start, end);
+      resolve(newItems);
+    }, CONFIG.LOADING_DELAY);
+  });
 }
-export function getPaginationData(){
-    return rawData;
-}
-export function getPositionMap(){
 
-    return buildPositionMap(rawData);
+// Построение карты позиций
+function buildPositionMap(data) {
+  const positionMap = new Map();
+  positionMap.set("All", data.length);
+  for (const item of data) {
+    const pos = item.position;
+    positionMap.set(pos, (positionMap.get(pos) || 0) + 1);
+  }
+  return positionMap;
+}
+
+export function getPositionMap() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(buildPositionMap(rawData));
+    }, CONFIG.LOADING_DELAY);
+  });
 }

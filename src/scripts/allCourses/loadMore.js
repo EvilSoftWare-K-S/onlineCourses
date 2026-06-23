@@ -1,5 +1,6 @@
 import { state, CONFIG } from "./state.js";
 import { renderCards } from "./cards.js";
+import { getSearchPaginationData } from "./mock.js";
 
 // Индикатор загрузки
 export function addLoadingIndicator() {
@@ -19,34 +20,34 @@ export function removeLoadingIndicator() {
   if (existingLoader) existingLoader.remove();
 }
 
-// Имитация загрузки с сервера
-export function loadMoreItems(startIndex, count) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const newItems = state.allFilteredItems.slice(
-        startIndex,
-        startIndex + count,
-      );
-      resolve(newItems);
-    }, CONFIG.LOADING_DELAY);
-  });
-}
-
 // Асинхронная подгрузка
 export async function loadMoreCards() {
   if (state.isLoading) return;
 
-  const totalFiltered = state.allFilteredItems.length;
+  const totalFiltered = state.positionMap.get(state.currentFilter);
   if (state.currentDisplayCount >= totalFiltered || totalFiltered === 0) return;
-
   state.isLoading = true;
   addLoadingIndicator();
-
+  state.prevFilter = state.currentFilter;
+  state.prevSearchQuery = state.currentSearchQuery;
   const startIndex = state.currentDisplayCount;
-  const newItems = await loadMoreItems(startIndex, CONFIG.LOAD_MORE_COUNT);
+  // можно оптимизировать через мемоизацию
+  if (
+    state.prevFilter != state.currentFilter ||
+    state.prevSearchQuery != state.currentSearchQuery
+  ) {
+    state.catalogData = [];
+  }
+  // можно оптимизировать через мемоизацию
+  const newItems = await getSearchPaginationData(
+    state.currentFilter,
+    state.currentSearchQuery,
+    startIndex,
+    startIndex + CONFIG.LOAD_MORE_COUNT,
+  );
+  state.catalogData.push(...newItems);
   state.currentDisplayCount += newItems.length;
-
-  renderCards();
+  renderCards(state.catalogData);
   state.isLoading = false;
   removeLoadingIndicator();
 }
