@@ -179,10 +179,20 @@ function buildPositionMap(data) {
   return positionMap;
 }
 
-export function getPositionMap() {
+export function getPositionMap(query) {
+  let filtered = [...rawData];
+  query=query.trim().toLowerCase();
+  filtered = filtered.filter((item) => {
+      return (
+        item.title.toLowerCase().includes(query) ||
+        item.name.toLowerCase().includes(query) ||
+        item.position.toLowerCase().includes(query)
+      );
+    });
+
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(buildPositionMap(rawData));
+      resolve(buildPositionMap(filtered));
     }, CONFIG.LOADING_DELAY);
   });
 }

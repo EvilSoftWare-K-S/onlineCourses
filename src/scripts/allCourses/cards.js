@@ -2,7 +2,7 @@ import { state, DOM, CONFIG } from "./state.js";
 import { escapeHtml } from "../utils/helpers.js";
 import { getSearchPaginationData } from "./mock.js";
 import { addLoadingIndicator, removeLoadingIndicator } from "./loadMore.js";
-
+import { renderFilters } from "./filters.js";
 // Рендеринг карточек
 export function renderCards(filteredItems) {
   if (filteredItems.length === 0) {
@@ -54,6 +54,7 @@ function createCardHTML(item) {
 // Сброс и рендеринг (сброс пагинации)
 export async function resetAndRender() {
   state.currentDisplayCount = CONFIG.INITIAL_DISPLAY_COUNT;
+  await renderFilters();
   renderCards([
     ...(await getSearchPaginationData(
       state.currentFilter,
