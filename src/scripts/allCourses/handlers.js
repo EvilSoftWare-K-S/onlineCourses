@@ -1,5 +1,5 @@
 import { state, DOM } from "./state.js";
-import { setFilter } from "./filters.js";
+import { setFilter, renderFilters } from "./filters.js";
 import { resetAndRender } from "./cards.js";
 import { handleScroll } from "./loadMore.js";
 import { debounce } from "../utils/helpers.js";
@@ -8,6 +8,7 @@ import { debounce } from "../utils/helpers.js";
 export function setupSearch() {
   const debouncedSearch = debounce(async (e) => {
     state.currentSearchQuery = e.target.value;
+    // renderFilters();
     await resetAndRender();
   }, 300);
 

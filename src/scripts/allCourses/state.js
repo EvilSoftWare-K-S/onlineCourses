@@ -21,7 +21,7 @@ export const CONFIG = {
   INITIAL_DISPLAY_COUNT: 9,
   LOAD_MORE_COUNT: 3,
   SCROLL_THRESHOLD: 200,
-  LOADING_DELAY: 1000,
+  LOADING_DELAY: 500,
 };
 
 // Функции для безопасного изменения состояния

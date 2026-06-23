@@ -3,35 +3,15 @@ import { escapeHtml, escapeAttr } from "../utils/helpers.js";
 import { getPositionMap, getSearchPaginationData } from "./mock.js";
 import { renderCards } from "./cards.js";
 
-// Получение отфильтрованных элементов
-export function getFilteredItems() {
-  let filtered = [...state.catalogData];
-
-  // Фильтр по должности
-  if (state.currentFilter !== "All") {
-    filtered = filtered.filter((item) => item.position === state.currentFilter);
-  }
-
-  // Поиск
-  if (state.currentSearchQuery.trim() !== "") {
-    const query = state.currentSearchQuery.trim().toLowerCase();
-    filtered = filtered.filter((item) => {
-      return (
-        item.title.toLowerCase().includes(query) ||
-        item.name.toLowerCase().includes(query) ||
-        item.position.toLowerCase().includes(query)
-      );
-    });
-  }
-  return filtered;
-}
-
 // Рендеринг фильтров
 export async function renderFilters() {
-  const positionMap = await getPositionMap();
+  const positionMap = await getPositionMap(state.currentSearchQuery);
   state.positionMap = positionMap;
   const sortedPositions = Array.from(positionMap.keys());
   let filtersHtml = ``;
+  if (!positionMap.has(state.currentFilter)) {
+    state.currentFilter = "All";
+  }
   for (const position of sortedPositions) {
     const count = positionMap.get(position);
 
